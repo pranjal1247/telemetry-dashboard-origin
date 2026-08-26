@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nationwide Telemetry Grid Dashboard
+
+A real-time telemetry dashboard built with [Next.js](https://nextjs.org) and React. This application visualizes live sensor data coming from distributed telemetry nodes across the country. 
+
+## Features
+
+- **Live MQTT Integration**: Connects to a public HiveMQ broker via WebSockets to ingest real-time data streams.
+- **AES-128 Decryption**: Ensures data integrity and security by decrypting AES-128 (ECB mode) encrypted payloads on the fly.
+- **Interactive Map Visualization**: Maps telemetry nodes onto a geographical grid (India) based on their latitude and longitude coordinates.
+- **Real-Time Node Metrics**: Displays node statistics including:
+  - Precise GPS or static location
+  - Temperature & Humidity readings
+  - Node IP address
+  - Last sync timestamps
+- **RF Channel Crowd Analysis**: Provides a detailed histogram visualization of Radio Frequency (RF) channel noise levels across 126 channels (2.4 GHz to 2.52 GHz), aiding in wireless spectrum analysis.
+- **Responsive UI**: Built with Tailwind CSS, featuring an intuitive, dark-themed, and responsive interface with micro-animations.
+
+## Technology Stack
+
+- **Framework**: Next.js (React)
+- **Styling**: Tailwind CSS
+- **Messaging**: MQTT (`mqtt` library)
+- **Cryptography**: `crypto-js` for AES decryption
+- **TypeScript**: Typed structures for robust data handling
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher recommended)
+- npm, yarn, pnpm, or bun
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the live dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+## How it works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The dashboard subscribes to the MQTT topic `Pbtx/Grp_4/#` on the HiveMQ public broker. It receives AES-encrypted JSON payloads, decrypts them using a predefined shared key, and dynamically updates the React state to reflect the nodes' status and RF metrics on the geographical UI.
