@@ -47,3 +47,4 @@ A real-time telemetry dashboard built with [Next.js](https://nextjs.org) and Rea
 ## How it works
 
 The dashboard subscribes to the MQTT topic `Pbtx/Grp_4/#` on the HiveMQ public broker. It receives AES-encrypted JSON payloads, decrypts them using a predefined shared key, and dynamically updates the React state to reflect the nodes' status and RF metrics on the geographical UI.
+ 
